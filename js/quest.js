@@ -15,8 +15,17 @@ function findStage(id) {
   return window.QUEST.stages.find(s => s.id === id);
 }
 
+// Ставит фон-паттерн для текущей страницы. page.bg — путь относительно
+// index.html (напр. "img/bg-stage1.png"). Нет bg → глобальный дефолт из CSS.
+function applyBackground(page) {
+  const bg = page && page.bg;
+  if (bg) document.body.style.setProperty('--bg-tile', `url("${bg}")`);
+  else document.body.style.removeProperty('--bg-tile');
+}
+
 function renderWelcome() {
   const w = window.QUEST.welcome;
+  applyBackground(w);
   app().innerHTML = `
     <section class="screen welcome">
       ${w.image ? `<img class="clue" src="${w.image}" alt="">` : ''}
@@ -29,6 +38,7 @@ function renderWelcome() {
 
 function renderFinish() {
   const f = window.QUEST.finish;
+  applyBackground(f);
   app().innerHTML = `
     <section class="screen finish">
       ${f.image ? `<img class="clue" src="${f.image}" alt="">` : ''}
@@ -44,6 +54,7 @@ function checkAnswer(stage, input) {
 }
 
 function renderStage(stage) {
+  applyBackground(stage);
   app().innerHTML = `
     <section class="screen stage">
       ${stage.image ? `<img class="clue" src="${stage.image}" alt="">` : ''}
