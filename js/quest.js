@@ -4,7 +4,8 @@ function parseHash() {
   const h = location.hash;
   const m = h.match(/^#\/stage\/(\d+)$/);
   if (m) return { view: 'stage', id: Number(m[1]) };
-  return { view: 'welcome' };
+  if (h === '' || h === '#' || h === '#/' || h === '#/welcome') return { view: 'welcome' };
+  return { view: 'unknown' };
 }
 
 function go(hash) { location.hash = hash; }
@@ -39,7 +40,8 @@ function renderStage(stage) {
       <div class="text">${stage.riddle}</div>
       <div class="answer-block">
         <input id="code" class="code-input" type="text" inputmode="text"
-               autocomplete="off" placeholder="Код-слово">
+               autocomplete="off" autocorrect="off" autocapitalize="off"
+               spellcheck="false" placeholder="Код-слово">
         <button id="check-btn" class="primary" disabled>Проверить</button>
       </div>
       <div id="feedback" class="feedback"></div>
@@ -60,6 +62,7 @@ function renderStage(stage) {
   };
   checkBtn.addEventListener('click', submit);
   input.addEventListener('keydown', e => { if (e.key === 'Enter') submit(); });
+  input.focus();
 }
 
 function onCorrect(stage) {
@@ -95,6 +98,7 @@ function onWrong(stage, inputEl) {
 function render() {
   const route = parseHash();
   if (route.view === 'welcome') return renderWelcome();
+  if (route.view === 'unknown') return go('#/stage/1');
   const stage = findStage(route.id);
   if (!stage) return go('#/stage/1');
   renderStage(stage);
