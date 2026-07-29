@@ -63,13 +63,33 @@ function renderStage(stage) {
 }
 
 function onCorrect(stage) {
-  // финальное поведение в Task 5; временно:
-  document.getElementById('feedback').textContent = 'ВЕРНО';
+  document.querySelector('.answer-block').classList.add('hidden');
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback ok';
+  fb.innerHTML = stage.correctText || 'Верно!';
+  const nb = document.getElementById('next-block');
+  if (stage.next != null) {
+    nb.innerHTML = `<button id="next-btn" class="primary">Дальше →</button>`;
+    document.getElementById('next-btn')
+      .addEventListener('click', () => go('#/stage/' + stage.next));
+  }
+  // stage.next отсутствует → финальный этап, кнопки нет
+}
+
+function pickWrongText(stage) {
+  const arr = stage.wrongTexts;
+  if (!arr || arr.length === 0) return 'Не то, попробуй ещё';
+  return arr[Math.floor(Math.random() * arr.length)];
 }
 
 function onWrong(stage, inputEl) {
-  // финальное поведение в Task 5; временно:
-  document.getElementById('feedback').textContent = 'НЕВЕРНО';
+  const fb = document.getElementById('feedback');
+  fb.className = 'feedback bad';
+  fb.textContent = pickWrongText(stage);
+  inputEl.classList.remove('shake');
+  void inputEl.offsetWidth; // рестарт анимации
+  inputEl.classList.add('shake');
+  // поле не очищаем
 }
 
 function render() {
