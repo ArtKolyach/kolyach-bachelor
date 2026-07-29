@@ -4,6 +4,7 @@ function parseHash() {
   const h = location.hash;
   const m = h.match(/^#\/stage\/(\d+)$/);
   if (m) return { view: 'stage', id: Number(m[1]) };
+  if (h === '#/finish') return { view: 'finish' };
   if (h === '' || h === '#' || h === '#/' || h === '#/welcome') return { view: 'welcome' };
   return { view: 'unknown' };
 }
@@ -24,6 +25,16 @@ function renderWelcome() {
       <button id="start-btn" class="primary">${w.buttonText || 'Начать →'}</button>
     </section>`;
   document.getElementById('start-btn').addEventListener('click', () => go('#/stage/1'));
+}
+
+function renderFinish() {
+  const f = window.QUEST.finish;
+  app().innerHTML = `
+    <section class="screen finish">
+      ${f.image ? `<img class="clue" src="${f.image}" alt="">` : ''}
+      <h1>${f.title}</h1>
+      <div class="text">${f.text}</div>
+    </section>`;
 }
 
 function normalize(s) { return String(s).trim().toLowerCase(); }
@@ -75,8 +86,12 @@ function onCorrect(stage) {
     nb.innerHTML = `<button id="next-btn" class="primary">Дальше →</button>`;
     document.getElementById('next-btn')
       .addEventListener('click', () => go('#/stage/' + stage.next));
+  } else {
+    // последний этап → кнопка ведёт на отдельную страницу финала
+    nb.innerHTML = `<button id="next-btn" class="primary">Финал →</button>`;
+    document.getElementById('next-btn')
+      .addEventListener('click', () => go('#/finish'));
   }
-  // stage.next отсутствует → финальный этап, кнопки нет
 }
 
 function pickWrongText(stage) {
@@ -98,6 +113,7 @@ function onWrong(stage, inputEl) {
 function render() {
   const route = parseHash();
   if (route.view === 'welcome') return renderWelcome();
+  if (route.view === 'finish') return renderFinish();
   if (route.view === 'unknown') return go('#/stage/1');
   const stage = findStage(route.id);
   if (!stage) return go('#/stage/1');
