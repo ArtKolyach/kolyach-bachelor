@@ -6,13 +6,21 @@
   --muted: #9aa0aa;
   --accent: #ffb300;
   --accent-fg: #1a1a1a;
+  /* Фон-паттерн: положи тайл в img/bg.png (или поменяй путь/формат тут).
+     Пока файла нет — показывается сплошной --bg, ничего не ломается. */
+  --bg-tile: url("../img/bg.png");
+  --bg-tile-size: auto;   /* напр. 128px для явного масштаба плитки */
 }
 
 * { box-sizing: border-box; }
 
 body {
   margin: 0;
-  background: var(--bg);
+  background-color: var(--bg);
+  background-image: var(--bg-tile);
+  background-repeat: repeat;
+  background-size: var(--bg-tile-size);
+  background-attachment: fixed;   /* паттерн не «уезжает» при скролле */
   color: var(--fg);
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   line-height: 1.5;
