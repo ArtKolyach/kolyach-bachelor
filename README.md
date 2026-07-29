@@ -1,0 +1,29 @@
+# Квест на мальчишник
+
+Статический сайт (vanilla JS), хостинг на GitHub Pages. Сборки нет.
+
+## Локальный запуск
+
+    npm run serve
+
+Открыть показанный `http://localhost:PORT`.
+
+## Контент
+
+Все загадки, коды и тексты — в `js/stages.js`. Правь там.
+
+## Деплой на GitHub Pages
+
+1. Запушить в репозиторий на GitHub.
+2. Settings → Pages → Source: `Deploy from a branch`, ветка `main` (или `master`), папка `/ (root)`.
+3. Сайт будет на `https://<user>.github.io/<repo>/`.
+
+## QR-коды
+
+QR ведёт на конкретный этап:
+`https://<user>.github.io/<repo>/#/stage/3`
+
+Генерация PNG (пример через публичный сервис-картинку, вставить в браузер):
+`https://api.qrserver.com/v1/create-qr-code/?size=600x600&data=<URL-этапа>`
+
+Сохранить PNG в `qr/stage-3.png`, распечатать, спрятать в реале.
