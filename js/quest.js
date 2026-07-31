@@ -69,7 +69,7 @@ function renderStage(stage) {
     <section class="screen stage">
       ${stage.image ? `<img class="clue" src="${stage.image}" alt="">` : ''}
       <h1>${stage.title}</h1>
-      <div class="text">${stage.riddle}</div>
+      ${stage.riddle ? `<div class="text">${stage.riddle}</div>` : ''}
       ${answerBlock}
       ${stage.hint ? `<details class="hint"><summary>Подсказка</summary>${stage.hint}</details>` : ''}
       ${hasAnswer ? `<div id="next-block"></div>` : ''}
@@ -103,7 +103,7 @@ function onCorrect(stage) {
   if (topImg) topImg.classList.add('hidden');
   const fb = document.getElementById('feedback');
   fb.className = 'feedback ok';
-  fb.innerHTML = stage.correctText || 'Верно!';
+  fb.innerHTML = stage.correctText || '';   // correctText опционален
   const nb = document.getElementById('next-block');
   // опц. картинка-награда, показывается после верного ответа
   const reward = stage.correctImage
@@ -122,7 +122,7 @@ function onCorrect(stage) {
 
 function pickWrongText(stage) {
   const arr = stage.wrongTexts;
-  if (!arr || arr.length === 0) return 'Не то, попробуй ещё';
+  if (!arr || arr.length === 0) return '';   // wrongTexts опционален
   return arr[Math.floor(Math.random() * arr.length)];
 }
 
