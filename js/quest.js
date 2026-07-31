@@ -88,7 +88,13 @@ function renderStage(stage) {
 }
 
 function onCorrect(stage) {
-  document.querySelector('.answer-block').classList.add('hidden');
+  const screen = document.querySelector('.screen.stage');
+  screen.querySelector('.answer-block').classList.add('hidden');
+  // после верного ответа скрываем вопрос и изначальную картинку этапа
+  const riddle = screen.querySelector('.text');
+  if (riddle) riddle.classList.add('hidden');
+  const topImg = screen.querySelector('img.clue');  // награда ещё не добавлена
+  if (topImg) topImg.classList.add('hidden');
   const fb = document.getElementById('feedback');
   fb.className = 'feedback ok';
   fb.innerHTML = stage.correctText || 'Верно!';
