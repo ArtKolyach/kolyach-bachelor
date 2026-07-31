@@ -55,21 +55,27 @@ function checkAnswer(stage, input) {
 
 function renderStage(stage) {
   applyBackground(stage);
-  app().innerHTML = `
-    <section class="screen stage">
-      ${stage.image ? `<img class="clue" src="${stage.image}" alt="">` : ''}
-      <h1>${stage.title}</h1>
-      <div class="text">${stage.riddle}</div>
+  // нет ответа → этап без ввода, переход на следующий по QR-коду
+  const hasAnswer = stage.answer != null && String(stage.answer).trim() !== '';
+  const answerBlock = hasAnswer ? `
       <div class="answer-block">
         <input id="code" class="code-input" type="text" inputmode="text"
                autocomplete="off" autocorrect="off" autocapitalize="off"
                spellcheck="false" placeholder="Код-слово">
         <button id="check-btn" class="primary" disabled>Проверить</button>
       </div>
-      <div id="feedback" class="feedback"></div>
+      <div id="feedback" class="feedback"></div>` : '';
+  app().innerHTML = `
+    <section class="screen stage">
+      ${stage.image ? `<img class="clue" src="${stage.image}" alt="">` : ''}
+      <h1>${stage.title}</h1>
+      <div class="text">${stage.riddle}</div>
+      ${answerBlock}
       ${stage.hint ? `<details class="hint"><summary>Подсказка</summary>${stage.hint}</details>` : ''}
-      <div id="next-block"></div>
+      ${hasAnswer ? `<div id="next-block"></div>` : ''}
     </section>`;
+
+  if (!hasAnswer) return;
 
   const input = document.getElementById('code');
   const checkBtn = document.getElementById('check-btn');
