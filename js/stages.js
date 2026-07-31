@@ -12,6 +12,7 @@ window.QUEST = {
       id: 1,
       title: "Этап 1",
       riddle: "Черновая загадка 1. Введи слово-код.",
+      image: "",  // опц. картинка, показывается сверху этапа ДО верного ответа
       answer: "пиво",
       next: 2,
       hint: "Подсказка к этапу 1",
@@ -24,6 +25,7 @@ window.QUEST = {
       id: 2,
       title: "Этап 2",
       riddle: "Черновая загадка 2.",
+      image: "",
       answer: "пиво",
       next: 3,
       wrongTexts: ["Не то", "Ещё по одной и попробуй"],
@@ -35,6 +37,7 @@ window.QUEST = {
       id: 3,
       title: "Этап 3",
       riddle: "Черновая загадка 3.",
+      image: "",
       answer: "пиво",
       next: 4,
       correctText: "Верно!",
@@ -48,17 +51,19 @@ window.QUEST = {
           "без моря и без флага.\n" +
           "Ты был здесь капитан, а я —\n" +
           "матрос и вся ватага.",
+      image: "",
       answer: "Мангал",
       next: 5,
       wrongTexts: ["Не угадал"],
       correctText: "Последний рывок!",
-      correctImage: "",
+      correctImage: "img/ship.jpeg",
       bg: ""
     },
     {
       id: 5,
       title: "Этап 5",
       riddle: "Последнее задание. Введи финальный код.",
+      image: "",
       answer: "пиво",
       correctText: "Верно! Последний код принят 🔓",
       correctImage: "",
