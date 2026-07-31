@@ -93,13 +93,16 @@ function onCorrect(stage) {
   fb.className = 'feedback ok';
   fb.innerHTML = stage.correctText || 'Верно!';
   const nb = document.getElementById('next-block');
+  // опц. картинка-награда, показывается после верного ответа
+  const reward = stage.correctImage
+    ? `<img class="clue reward" src="${stage.correctImage}" alt="">` : '';
   if (stage.next != null) {
-    nb.innerHTML = `<button id="next-btn" class="primary">Дальше →</button>`;
+    nb.innerHTML = reward + `<button id="next-btn" class="primary">Дальше →</button>`;
     document.getElementById('next-btn')
       .addEventListener('click', () => go('#/stage/' + stage.next));
   } else {
     // последний этап → кнопка ведёт на отдельную страницу финала
-    nb.innerHTML = `<button id="next-btn" class="primary">Финал →</button>`;
+    nb.innerHTML = reward + `<button id="next-btn" class="primary">Финал →</button>`;
     document.getElementById('next-btn')
       .addEventListener('click', () => go('#/finish'));
   }
